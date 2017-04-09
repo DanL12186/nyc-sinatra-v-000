@@ -11,16 +11,26 @@ class FiguresController < ApplicationController
     erb :'/figures/new'
   end
 
-  post '/figures' do
+  post '/figures' do #(params[:figure][:landmark_ids]) is no good
     #binding.pry
-    @figure = Figure.create(name: params[:figure][:name])                         #params[:title][:name]
-    @figure.titles << Title.find_or_create_by(params[:figure][:title_ids]) if params[:figure][:title_ids] != nil
-    else
-      @figure.titles << Title.find_or_create_by(params[:title][:name]
-
-    #find and set title by its title_ids attribute
-    @figure.landmarks << Landmark.find_or_create_by(params[:figure][:landmark_ids]) unless params[:figure][:landmark_ids] == nil
+    @figure = Figure.create(params[:figure])
+    @figure.titles << Title.find_or_create_by(params[:title]) unless params[:title].values == '' #find and set title by its title_ids attribute
+    @figure.landmarks << Landmark.find_or_create_by(params[:landmark]) unless params[:landmark].values == ''
     @figure.save
+    redirect "/figures/#{@figure.id}"
+  end
+
+  get '/figures/:id' do
+    @figure = Figure.find(params[:id])
+    erb :'/figures/show'
+  end
+
+
+  get '/figures/:id/edit' do
+    @figure = Figure.find(params[:id])  #grab figure by id from URL
+    @landmarks = Landmark.all           #grab all landmarks and titles.
+    @titles = Title.all
+    erb :'/figures/edit'
   end
 
 end
