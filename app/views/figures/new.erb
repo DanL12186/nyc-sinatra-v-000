@@ -1,0 +1,30 @@
+<h1>Create a new figure: </h1>
+
+<form action="/figures" method="POST">
+  <h4>Figure Name: <input type="text" id="figure_name" name="figure[name]"></h4>
+
+<h2>...And/Or select existing: </h2>
+<!--CODE FOR SELECT EXISTING LANDMARK/TITLES here-->
+<p>Landmark(s)</p>
+
+<%@landmarks.each do |landmark|%>
+    <input type="checkbox" value="<%=landmark.id%>" name="figure[landmark_ids][]" id="landmark_<%=landmark.id%>"><%=landmark.name%> <!--chkbx name= grabs lndmks by id-->
+<%end%>
+
+<br>
+
+<p>Title(s)</p>
+
+<%@titles.each do |title|%>
+    <input type="checkbox" value="<%=title.id%>" name="figure[title_ids][]" id="title_<%=title.id%>"><%=title.name%> <!--title name= grabs ttls by fig's title id-->
+<%end%>
+
+<br>
+
+<h2>And/Or add and associate new landmarks and titles</h2>
+
+<h4>Landmark Name: <input type="text" id="new_landmark" name="landmark[name]"></h4>
+
+<h4>Title Name: <input type="text" id="new_title" name="title[name]"></h4>
+<input type="submit" value="Create New Figure">
+</form>
