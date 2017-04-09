@@ -14,7 +14,11 @@ class FiguresController < ApplicationController
   post '/figures' do
     #binding.pry
     @figure = Figure.create(name: params[:figure][:name])                         #params[:title][:name]
-    @figure.titles << Title.find_or_create_by(params[:figure][:title_ids]) unless params[:figure][:title_ids] == nil #find and set title by its title_ids attribute
+    @figure.titles << Title.find_or_create_by(params[:figure][:title_ids]) if params[:figure][:title_ids] != nil
+    else
+      @figure.titles << Title.find_or_create_by(params[:title][:name]
+
+    #find and set title by its title_ids attribute
     @figure.landmarks << Landmark.find_or_create_by(params[:figure][:landmark_ids]) unless params[:figure][:landmark_ids] == nil
     @figure.save
   end
